@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove URLs from Text File</title>
+</head>
+<body>
+    <h2>Upload a .txt File to Remove URLs</h2>
+    <input type="file" id="fileInput" accept=".txt" />
+    <button onclick="processFile()">Process File</button>
+    <pre id="output"></pre>
+
+    <script>
+        function processFile() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please upload a file.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                let content = event.target.result;
+
+                // Regular expression to match URLs
+                const urlPattern = /https?:\/\/\S+/g;
+
+                // Remove all URLs from the content, including the specific one
+                content = content.replace(urlPattern, '');
+
+                // Display the result
+                document.getElementById("output").textContent = content;
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
